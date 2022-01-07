@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.moviesapp.ui.MainFragment"
+        android:label="Peliculas"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_detailsMovieFragment"
+            app:destination="@id/detailsMovieFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_firebaseFragment"
+            app:destination="@id/firebaseFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsMovieFragment"
+        android:name="com.example.moviesapp.ui.DetailsMovieFragment"
+        android:label="Detalles "
+        tools:layout="@layout/fragment_details_movie" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.moviesapp.ui.FavoriteFragment"
+        android:label="Peliculas Favoritas"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/firebaseFragment"
+        android:name="com.example.moviesapp.ui.FirebaseFragment"
+        android:label="Firebase"
+        tools:layout="@layout/fragment_firebase" />
+</navigation>

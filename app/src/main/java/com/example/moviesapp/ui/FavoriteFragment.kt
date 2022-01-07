@@ -1,0 +1,74 @@
+package com.example.moviesapp.ui
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moviesapp.AppDataBase
+import com.example.moviesapp.R
+import com.example.moviesapp.data.DataSource
+import com.example.moviesapp.data.model.Movies
+import com.example.moviesapp.domain.RepoImpl
+import com.example.moviesapp.ui.viewmodel.MainViewModel
+import com.example.moviesapp.ui.viewmodel.VMFactory
+import com.example.moviesapp.vo.Resource
+import kotlinx.android.synthetic.main.fragment_favorite.*
+
+class FavoriteFragment : Fragment(), MainAdapter.OnMovieClickListener {
+
+    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(
+        RepoImpl(
+            DataSource(
+        AppDataBase.getDatabase(requireActivity().applicationContext))
+        )
+    ) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
+        setUpObservers()
+    }
+
+    private fun setUpObservers(){
+        viewModel.getMoviesFavorites().observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    val lista = result.data.map {
+                        Movies(it.movieId,it.title,it.release_date,it.vote_average,it.overview,it.poster_path)
+                    }
+                    rv_favs.adapter = MainAdapter(requireContext(), lista,this)
+                }
+                is Resource.Failure -> {}
+            }
+        })
+    }
+
+    private fun setUpRecyclerView(){
+        rv_favs.layoutManager = LinearLayoutManager(requireContext())
+        rv_favs.addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
+    }
+
+    override fun onMovieClick(movie: Movies) {
+        Toast.makeText(requireContext(),"Pelicula: ${movie.title}", Toast.LENGTH_SHORT).show()
+    }
+}

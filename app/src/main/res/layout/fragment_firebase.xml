@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.FirebaseFragment"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtFirebase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:text="Firebase Cloud"
+        android:textColor="@color/black"
+        android:textSize="28dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Presione el boton para subir una imagen desde la galeria al Firebase Storage"
+        android:textSize="20dp"
+        />
+
+
+    <Button
+        android:id="@+id/btn_uploadimg"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="32dp"
+        android:text="Subir Imagen desde la Galeria"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
+
+
+</LinearLayout>
