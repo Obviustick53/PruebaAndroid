@@ -15,13 +15,13 @@ import com.example.moviesapp.data.model.MovieEntity
 import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.domain.RepoImpl
 import com.example.moviesapp.ui.viewmodel.MainViewModel
-import com.example.moviesapp.ui.viewmodel.VMFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_details_movie.*
 
+@AndroidEntryPoint
 class DetailsMovieFragment : Fragment() {
 
-    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(RepoImpl(DataSourceImpl(
-        AppDataBase.getDatabase(requireActivity().applicationContext)))) }
+    private val viewModel by activityViewModels<MainViewModel>()
 
     private lateinit var movie:Movies
 

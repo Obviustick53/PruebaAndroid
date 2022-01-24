@@ -3,8 +3,9 @@ package com.example.moviesapp.domain
 import com.example.moviesapp.data.model.MovieEntity
 import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.vo.Resource
+import javax.inject.Inject
 
-class RepoImpl(private val dataSource: DataSource): Repo {
+class RepoImpl @Inject constructor(private val dataSource: DataSource): Repo {
 
     override suspend fun getMoviesList(): Resource<List<Movies>> {
         return dataSource.getMovies()
