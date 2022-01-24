@@ -1,9 +1,6 @@
 package com.example.moviesapp.domain
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.moviesapp.data.model.MovieEntity
 
 
@@ -15,4 +12,7 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavoriteMovie(movie:MovieEntity)
+
+    @Delete
+    suspend fun deleteFavoriteMovie(movie: MovieEntity)
 }

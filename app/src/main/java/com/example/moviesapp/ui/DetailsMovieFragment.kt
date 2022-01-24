@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.example.moviesapp.AppDataBase
 import com.example.moviesapp.R
-import com.example.moviesapp.data.DataSource
+import com.example.moviesapp.data.DataSourceImpl
 import com.example.moviesapp.data.model.MovieEntity
 import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.domain.RepoImpl
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_details_movie.*
 
 class DetailsMovieFragment : Fragment() {
 
-    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(RepoImpl(DataSource(
+    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(RepoImpl(DataSourceImpl(
         AppDataBase.getDatabase(requireActivity().applicationContext)))) }
 
     private lateinit var movie:Movies

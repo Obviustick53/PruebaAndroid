@@ -1,7 +1,6 @@
 package com.example.moviesapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviesapp.AppDataBase
 import com.example.moviesapp.R
-import com.example.moviesapp.data.DataSource
+import com.example.moviesapp.data.DataSourceImpl
+import com.example.moviesapp.data.model.MovieEntity
 import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.domain.RepoImpl
 import com.example.moviesapp.ui.viewmodel.MainViewModel
@@ -21,11 +21,11 @@ import com.example.moviesapp.ui.viewmodel.VMFactory
 import com.example.moviesapp.vo.Resource
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
-class FavoriteFragment : Fragment(), MainAdapter.OnMovieClickListener {
+class FavoriteFragment : Fragment(),  MainAdapter.OnFavoriteClickListener,MainAdapter.OnMovieClickListener{
 
     private val viewModel by activityViewModels<MainViewModel>{ VMFactory(
         RepoImpl(
-            DataSource(
+            DataSourceImpl(
         AppDataBase.getDatabase(requireActivity().applicationContext))
         )
     ) }
@@ -68,7 +68,14 @@ class FavoriteFragment : Fragment(), MainAdapter.OnMovieClickListener {
         rv_favs.addItemDecoration(DividerItemDecoration(requireContext(),DividerItemDecoration.VERTICAL))
     }
 
-    override fun onMovieClick(movie: Movies) {
-        Toast.makeText(requireContext(),"Pelicula: ${movie.title}", Toast.LENGTH_SHORT).show()
+    override fun onFavoriteClickListener(movie: MovieEntity, position: Int) {
+        viewModel.deleteMoviesFavorites(movie)
+        rv_favs.adapter?.notifyItemRemoved(position)
+        rv_favs.adapter?.notifyItemRangeRemoved(position,rv_favs.adapter?.itemCount!!)
     }
+
+    override fun onMovieClick(movie: Movies) {
+        Toast.makeText(requireContext(),"Movie: ${movie.title}",Toast.LENGTH_SHORT).show()
+    }
+
 }

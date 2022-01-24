@@ -9,4 +9,5 @@ interface Repo {
     suspend fun getMoviesList(): Resource<List<Movies>>
     suspend fun getFavoritesMovies(): Resource<List<MovieEntity>>
     suspend fun insertMovie(movie:MovieEntity)
+    suspend fun deleteMovie(movie: MovieEntity)
 }

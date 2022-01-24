@@ -3,21 +3,26 @@ package com.example.moviesapp.data
 import com.example.moviesapp.AppDataBase
 import com.example.moviesapp.data.model.MovieEntity
 import com.example.moviesapp.data.model.Movies
+import com.example.moviesapp.domain.DataSource
 import com.example.moviesapp.vo.Resource
 import com.example.moviesapp.vo.RetrofitClient
 
-class DataSource(private val appDataBase: AppDataBase){
+class DataSourceImpl(private val appDataBase: AppDataBase):DataSource{
 
-    suspend fun getMovies(): Resource<List<Movies>>{
+    override suspend fun getMovies(): Resource<List<Movies>>{
         return Resource.Success(RetrofitClient.webservice.getMovies().results)
     }
 
-    suspend fun insertMovieRoom(movie:MovieEntity){
+    override suspend fun insertMovieRoom(movie:MovieEntity){
         appDataBase.movieDao().insertFavoriteMovie(movie)
     }
 
-    suspend fun getMoviesFavorites(): Resource<List<MovieEntity>>{
+    override suspend fun getMoviesFavorites(): Resource<List<MovieEntity>>{
         return Resource.Success(appDataBase.movieDao().getAllFavoritesMovies())
+    }
+
+    override suspend fun deleteMovieRoom(movie: MovieEntity) {
+        appDataBase.movieDao().deleteFavoriteMovie(movie)
     }
     /*val generateMovieList = Resource.Success(listOf(
         Movies("Spiderman","12-12-2021",8.7f,"Pelicula de Marvel","https://es.web.img2.acsta.net/pictures/21/12/01/12/07/0243323.jpg"),

@@ -2,6 +2,7 @@ package com.example.moviesapp.ui.viewmodel
 
 import androidx.lifecycle.*
 import com.example.moviesapp.data.model.MovieEntity
+import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.domain.Repo
 import com.example.moviesapp.vo.Resource
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +40,12 @@ class MainViewModel(private val repo:Repo):ViewModel(){
         }
     }
 
+    fun deleteMoviesFavorites(movie: MovieEntity){
+        viewModelScope.launch {
+            repo.deleteMovie(movie)
+        }
+
+    }
     /*val fetchMoviesList =  movieData.distinctUntilChanged().switchMap{
         liveData(Dispatchers.IO) {
             emit(Resource.Loading())

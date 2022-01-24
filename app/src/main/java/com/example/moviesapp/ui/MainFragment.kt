@@ -5,18 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moviesapp.AppDataBase
 import com.example.moviesapp.R
-import com.example.moviesapp.data.DataSource
+import com.example.moviesapp.data.DataSourceImpl
 import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.domain.RepoImpl
 import com.example.moviesapp.ui.viewmodel.MainViewModel
@@ -26,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment(), MainAdapter.OnMovieClickListener {
 
-    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(RepoImpl(DataSource(
+    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(RepoImpl(DataSourceImpl(
         AppDataBase.getDatabase(requireActivity().applicationContext)))) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
