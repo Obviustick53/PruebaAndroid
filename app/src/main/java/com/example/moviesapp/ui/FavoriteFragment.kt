@@ -17,18 +17,15 @@ import com.example.moviesapp.data.model.MovieEntity
 import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.domain.RepoImpl
 import com.example.moviesapp.ui.viewmodel.MainViewModel
-import com.example.moviesapp.ui.viewmodel.VMFactory
 import com.example.moviesapp.vo.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
+@AndroidEntryPoint
 class FavoriteFragment : Fragment(),  MainAdapter.OnFavoriteClickListener,MainAdapter.OnMovieClickListener{
 
-    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(
-        RepoImpl(
-            DataSourceImpl(
-        AppDataBase.getDatabase(requireActivity().applicationContext))
-        )
-    ) }
+    private lateinit var adapter: MainAdapter
+    private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +52,9 @@ class FavoriteFragment : Fragment(),  MainAdapter.OnFavoriteClickListener,MainAd
                 is Resource.Success -> {
                     val lista = result.data.map {
                         Movies(it.movieId,it.title,it.release_date,it.vote_average,it.overview,it.poster_path)
-                    }
-                    rv_favs.adapter = MainAdapter(requireContext(), lista,this)
+                    }.toMutableList()
+                    adapter = MainAdapter(requireContext(), lista,this)
+                    rv_favs.adapter = adapter
                 }
                 is Resource.Failure -> {}
             }

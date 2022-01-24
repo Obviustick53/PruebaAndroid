@@ -17,14 +17,14 @@ import com.example.moviesapp.data.DataSourceImpl
 import com.example.moviesapp.data.model.Movies
 import com.example.moviesapp.domain.RepoImpl
 import com.example.moviesapp.ui.viewmodel.MainViewModel
-import com.example.moviesapp.ui.viewmodel.VMFactory
 import com.example.moviesapp.vo.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_main.*
 
+@AndroidEntryPoint
 class MainFragment : Fragment(), MainAdapter.OnMovieClickListener {
 
-    private val viewModel by activityViewModels<MainViewModel>{ VMFactory(RepoImpl(DataSourceImpl(
-        AppDataBase.getDatabase(requireActivity().applicationContext)))) }
+    private val viewModel by activityViewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
